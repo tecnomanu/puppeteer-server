@@ -167,11 +167,25 @@ describe('MCP Server Integration', () => {
 					}
 				};
 
+				let timeoutId: NodeJS.Timeout | undefined;
 				const timeoutPromise = new Promise((_, reject) => {
-					setTimeout(() => reject(new Error('Timeout')), 10000);
+					timeoutId = setTimeout(
+						() => reject(new Error('Timeout')),
+						10000
+					);
 				});
 
-				return Promise.race([operation(), timeoutPromise]);
+				try {
+					const result = await Promise.race([
+						operation(),
+						timeoutPromise,
+					]);
+					if (timeoutId) clearTimeout(timeoutId);
+					return result;
+				} catch (error) {
+					if (timeoutId) clearTimeout(timeoutId);
+					throw error;
+				}
 			};
 
 			// Test navegación exitosa
