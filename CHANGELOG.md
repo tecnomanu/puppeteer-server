@@ -1,3 +1,15 @@
+## [1.5.1](https://github.com/tecnomanu/puppeteer-server/compare/v1.5.0...v1.5.1) (2025-09-06)
+
+
+### Bug Fixes
+
+* 🔧 change package name to scoped @tecnomanu/puppeteer-server ([dc4769c](https://github.com/tecnomanu/puppeteer-server/commit/dc4769cd0fb11e922107816b3025897679104798))
+
+
+### Reverts
+
+* 🔙 restore original package name 'puppeteer-server' ([1815f1f](https://github.com/tecnomanu/puppeteer-server/commit/1815f1ff2a96fa8059e80668fecf550795c89b72))
+
 # [1.5.0](https://github.com/tecnomanu/puppeteer-server/compare/v1.4.2...v1.5.0) (2025-09-06)
 
 
