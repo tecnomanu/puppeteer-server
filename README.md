@@ -314,6 +314,78 @@ docker-compose -f docker-compose.security.yml up
 4. **MONITOREAR** logs de auditoría regularmente
 5. **ACTUALIZAR** dependencias regularmente
 
+## 🧪 Testing
+
+El proyecto incluye una suite completa de tests con **43 test cases**:
+
+- **Tests Unitarios**: Validación de funciones de seguridad y herramientas individuales
+- **Tests de Integración**: Verificación del servidor MCP completo  
+- **Tests de Configuración**: Validación de ejemplos de configuración
+
+```bash
+# Ejecutar todos los tests
+npm test
+
+# Tests con cobertura de código
+npm run test:coverage
+
+# Tests en modo desarrollo (watch)
+npm run test:watch
+```
+
+### 📊 Cobertura de Tests
+
+Los tests cubren:
+- ✅ Validación de orígenes y dominios permitidos
+- ✅ Rate limiting y timeouts
+- ✅ Generación de hashes y auditoría
+- ✅ Configuración de seguridad
+- ✅ Herramientas MCP individuales
+- ✅ Manejo de errores y excepciones
+- ✅ Validación de ejemplos de configuración
+
+## 📁 Ejemplos de Configuración
+
+La carpeta `examples/` contiene configuraciones listas para usar:
+
+| Archivo | Descripción | Uso Recomendado |
+|---------|-------------|----------------|
+| `mcp-config-example.json` | Configuración básica | Desarrollo local |
+| `mcp-config-secure-example.json` | Configuración segura | Producción |
+| `docker-mcp-config.json` | Con Docker hardening | Contenedores |
+| `claude-desktop-config.json` | Optimizado para Claude | Claude Desktop |
+
+Ver [examples/README.md](examples/README.md) para detalles completos sobre cada configuración.
+
+## 🛠️ Desarrollo
+
+```bash
+# Desarrollo con watch mode
+npm run dev
+
+# Linting y formato de código
+npm run lint          # Corregir errores automáticamente
+npm run lint:check    # Solo verificar errores
+npm run format        # Formatear código con Prettier
+npm run format:check  # Verificar formato
+
+# Testing
+npm test              # Ejecutar todos los tests
+npm run test:watch    # Tests en modo watch
+npm run test:coverage # Tests con reporte de cobertura
+
+# Construcción
+npm run build
+```
+
+### 🔧 Herramientas de Calidad
+
+- **ESLint**: Análisis estático con reglas de seguridad
+- **Prettier**: Formateo consistente de código
+- **Jest**: Framework de testing con cobertura
+- **Husky**: Pre-commit hooks para calidad
+- **TypeScript**: Tipado estático y compilación
+
 ## 📄 Licencia
 
 MIT License - Eres libre de usar, modificar y distribuir este software.

@@ -12,6 +12,14 @@ build/
 # Archivos de entorno
 .env
 .env.local
+
+# Test coverage
+coverage/
+*.lcov
+
+# Jest
+.nyc_output
+test-results/
 .env.development.local
 .env.test.local
 .env.production.local

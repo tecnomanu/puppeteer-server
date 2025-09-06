@@ -1,0 +1,26 @@
+{
+	"mcpServers": {
+		"puppeteer-server": {
+			"command": "docker",
+			"args": [
+				"run", "--rm", "-i",
+				"--security-opt", "no-new-privileges:true",
+				"--cap-drop", "ALL",
+				"--user", "1001:1001",
+				"--read-only",
+				"--tmpfs", "/tmp:rw,noexec,nosuid,size=100m",
+				"--tmpfs", "/var/tmp:rw,noexec,nosuid,size=50m",
+				"-e", "ALLOWED_ORIGINS=https://example.com,https://*.trusted-domain.org",
+				"-e", "MAX_SCREENSHOT_SIZE=1048576",
+				"-e", "MAX_CONTENT_LENGTH=524288",
+				"-e", "TOOL_TIMEOUT=20000",
+				"-e", "ALLOW_DANGEROUS=false",
+				"-e", "NODE_ENV=production",
+				"puppeteer-server:latest"
+			],
+			"env": {
+				"DOCKER_CONTAINER": "true"
+			}
+		}
+	}
+}

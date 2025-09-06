@@ -1,0 +1,18 @@
+{
+	"mcpServers": {
+		"puppeteer-server": {
+			"command": "node",
+			"args": [
+				"/Users/tu-usuario/proyectos/puppeteer-server/dist/index.js"
+			],
+			"env": {
+				"ALLOWED_ORIGINS": "https://github.com,https://*.github.io,https://docs.anthropic.com,https://claude.ai",
+				"MAX_SCREENSHOT_SIZE": "2097152",
+				"MAX_CONTENT_LENGTH": "1048576",
+				"TOOL_TIMEOUT": "30000",
+				"ALLOW_DANGEROUS": "false",
+				"NODE_ENV": "development"
+			}
+		}
+	}
+}
