@@ -1,3 +1,10 @@
+## [1.5.3](https://github.com/tecnomanu/puppeteer-server/compare/v1.5.2...v1.5.3) (2025-09-06)
+
+
+### Bug Fixes
+
+* 🔧 retry npm publishing with automation token ([a3fa226](https://github.com/tecnomanu/puppeteer-server/commit/a3fa226cf33433373d52d7c76a09fc1684fb2cfe))
+
 ## [1.5.2](https://github.com/tecnomanu/puppeteer-server/compare/v1.5.1...v1.5.2) (2025-09-06)
 
 
