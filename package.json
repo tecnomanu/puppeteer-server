@@ -1,5 +1,5 @@
 {
-	"name": "puppeteer-server",
+	"name": "@tecnomanu/puppeteer-server",
 	"version": "1.5.0",
 	"description": "Servidor MCP personalizado para automatización de navegadores usando Puppeteer",
 	"license": "MIT",
