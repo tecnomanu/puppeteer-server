@@ -21,7 +21,7 @@ Please read our [Code of Conduct](CODE_OF_CONDUCT.md) before participating in ou
 4. **Make your changes**
 5. **Test your changes**
     ```bash
-    pnpm run test
+    pnpm test
     ```
 6. **Commit your changes**
    Follow our commit conventions as documented in our [README.md](README.md#commit-conventions)

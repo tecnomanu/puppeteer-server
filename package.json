@@ -23,8 +23,8 @@
     "lint:check": "eslint src --ext .ts",
     "format": "prettier --write \"src/**/*.{ts,js,json}\"",
     "format:check": "prettier --check \"src/**/*.{ts,js,json}\"",
-		"prepare": "npm run build && husky install",
-		"prepublishOnly": "npm run build && npm run test",
+		"prepare": "pnpm run build && husky install",
+		"prepublishOnly": "pnpm run build && pnpm run test",
 		"release": "semantic-release"
 	},
 	"dependencies": {

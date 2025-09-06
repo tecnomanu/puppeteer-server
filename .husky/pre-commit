@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 . "$(dirname -- "$0")/_/husky.sh"
 
-npm run format:check
-npm run lint:check
-npm run build
-npm test
+pnpm run format:check
+pnpm run lint:check
+pnpm run build
+pnpm test

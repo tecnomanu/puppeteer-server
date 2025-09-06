@@ -2,7 +2,7 @@
  * Tests unitarios para funciones de seguridad
  */
 
-import { jest } from '@jest/globals';
+// import { jest } from '@jest/globals';
 
 // Mock de las funciones que vamos a testear
 // Estas funciones deberían ser exportadas desde el archivo principal

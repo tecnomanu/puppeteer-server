@@ -2,7 +2,7 @@
  * Tests de integración para el servidor MCP completo
  */
 
-import { jest } from '@jest/globals';
+// import { jest } from '@jest/globals';
 
 // Mock de Puppeteer
 jest.mock('puppeteer');

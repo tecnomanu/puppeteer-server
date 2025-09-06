@@ -2,7 +2,7 @@
  * Tests unitarios para las herramientas MCP
  */
 
-import { jest } from '@jest/globals';
+// import { jest } from '@jest/globals';
 
 // Mock de Puppeteer
 jest.mock('puppeteer');

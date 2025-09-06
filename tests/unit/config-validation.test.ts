@@ -2,7 +2,7 @@
  * Tests para validar los ejemplos de configuración MCP
  */
 
-import { jest } from '@jest/globals';
+// import { jest } from '@jest/globals';
 import * as fs from 'fs';
 import * as path from 'path';
 

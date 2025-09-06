@@ -19,19 +19,19 @@ Un servidor del Protocolo de Contexto de Modelo (MCP) que proporciona capacidade
 ### Instalar dependencias
 
 ```bash
-npm install
+pnpm install
 ```
 
 ### Compilar el proyecto
 
 ```bash
-npm run build
+pnpm run build
 ```
 
 ### Ejecutar en modo desarrollo
 
 ```bash
-npm run dev
+pnpm run dev
 ```
 
 ## 📋 Herramientas Disponibles
@@ -324,13 +324,13 @@ El proyecto incluye una suite completa de tests con **43 test cases**:
 
 ```bash
 # Ejecutar todos los tests
-npm test
+pnpm test
 
 # Tests con cobertura de código
-npm run test:coverage
+pnpm run test:coverage
 
 # Tests en modo desarrollo (watch)
-npm run test:watch
+pnpm run test:watch
 ```
 
 ### 📊 Cobertura de Tests
@@ -361,21 +361,21 @@ Ver [examples/README.md](examples/README.md) para detalles completos sobre cada 
 
 ```bash
 # Desarrollo con watch mode
-npm run dev
+pnpm run dev
 
 # Linting y formato de código
-npm run lint          # Corregir errores automáticamente
-npm run lint:check    # Solo verificar errores
-npm run format        # Formatear código con Prettier
-npm run format:check  # Verificar formato
+pnpm run lint          # Corregir errores automáticamente
+pnpm run lint:check    # Solo verificar errores
+pnpm run format        # Formatear código con Prettier
+pnpm run format:check  # Verificar formato
 
 # Testing
-npm test              # Ejecutar todos los tests
-npm run test:watch    # Tests en modo watch
-npm run test:coverage # Tests con reporte de cobertura
+pnpm test              # Ejecutar todos los tests
+pnpm run test:watch    # Tests en modo watch
+pnpm run test:coverage # Tests con reporte de cobertura
 
 # Construcción
-npm run build
+pnpm run build
 ```
 
 ### 🔧 Herramientas de Calidad

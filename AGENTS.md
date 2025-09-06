@@ -14,8 +14,8 @@ Puppeteer Server is a secure MCP server that provides browser automation capabil
 # Clone and build the project
 git clone https://github.com/your-username/puppeteer-server.git
 cd puppeteer-server
-npm install
-npm run build
+pnpm install
+pnpm run build
 ```
 
 ### 2. Configuration
