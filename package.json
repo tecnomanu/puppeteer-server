@@ -54,10 +54,10 @@
 		"browser-automation",
 		"web-scraping"
 	],
-	"author": "Tu Proyecto",
+	"author": "TecnoManu",
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com/tu-usuario/puppeteer-server.git"
+		"url": "git+https://github.com/tecnomanu/puppeteer-server.git"
 	},
 	"publishConfig": {
 		"access": "public"

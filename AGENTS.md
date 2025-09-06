@@ -12,7 +12,7 @@ Puppeteer Server is a secure MCP server that provides browser automation capabil
 
 ```bash
 # Clone and build the project
-git clone https://github.com/your-username/puppeteer-server.git
+git clone https://github.com/tecnomanu/puppeteer-server.git
 cd puppeteer-server
 pnpm install
 pnpm run build
