@@ -12,16 +12,19 @@
 		"dist",
 		"README.md"
 	],
-  "scripts": {
-    "build": "tsc && chmod +x dist/*.js",
-    "dev": "tsc --watch",
-    "start": "node dist/index.js",
+	"scripts": {
+		"build": "tsc && chmod +x dist/*.js",
+		"dev": "tsc --watch",
+		"start": "node dist/index.js",
     "test": "echo \"Tests will be implemented in future versions\" && exit 0",
-    "lint": "echo \"Linting will be implemented in future versions\" && exit 0",
-    "prepare": "npm run build && husky install",
-    "prepublishOnly": "npm run build && npm run test",
-    "release": "semantic-release"
-  },
+    "lint": "eslint src --ext .ts --fix",
+    "lint:check": "eslint src --ext .ts",
+    "format": "prettier --write \"src/**/*.{ts,js,json}\"",
+    "format:check": "prettier --check \"src/**/*.{ts,js,json}\"",
+		"prepare": "npm run build && husky install",
+		"prepublishOnly": "npm run build && npm run test",
+		"release": "semantic-release"
+	},
 	"dependencies": {
 		"@modelcontextprotocol/sdk": "^1.0.1",
 		"puppeteer": "^23.4.0"
@@ -32,7 +35,12 @@
     "husky": "^9.0.11",
     "semantic-release": "^24.0.0",
     "@semantic-release/changelog": "^6.0.3",
-    "@semantic-release/git": "^10.0.1"
+    "@semantic-release/git": "^10.0.1",
+    "eslint": "^8.57.0",
+    "@typescript-eslint/eslint-plugin": "^7.18.0",
+    "@typescript-eslint/parser": "^7.18.0",
+    "eslint-config-prettier": "^9.1.0",
+    "prettier": "^3.3.3"
   },
 	"keywords": [
 		"mcp",
@@ -42,14 +50,14 @@
 		"web-scraping"
 	],
 	"author": "Tu Proyecto",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/tu-usuario/puppeteer-server.git"
-  },
-  "publishConfig": {
-    "access": "public"
-  },
-  "engines": {
-    "node": ">=18.0.0"
-  }
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/tu-usuario/puppeteer-server.git"
+	},
+	"publishConfig": {
+		"access": "public"
+	},
+	"engines": {
+		"node": ">=18.0.0"
+	}
 }

@@ -519,7 +519,7 @@ function deepMerge(target: any, source: any): any {
 												arg.split('=')[0]
 											)
 									)
-						  )
+							)
 						: targetVal),
 					...sourceVal,
 				]),
@@ -611,13 +611,13 @@ async function handleToolCall(
 
 					await page.setViewport({ width, height });
 					const screenshot = await (args.selector
-						? (
-								await page.$(args.selector)
-						  )?.screenshot({ encoding: 'base64' })
+						? (await page.$(args.selector))?.screenshot({
+								encoding: 'base64',
+							})
 						: page.screenshot({
 								encoding: 'base64',
 								fullPage: false,
-						  }));
+							}));
 
 					if (!screenshot) {
 						throw new Error(
@@ -667,14 +667,14 @@ async function handleToolCall(
 											type: 'text' as const,
 											text: `data:image/png;base64,${screenshot}`,
 										},
-								  ]
+									]
 								: [
 										{
 											type: 'image' as const,
 											data: screenshot as string,
 											mimeType: 'image/png',
 										},
-								  ]),
+									]),
 						],
 						isError: false,
 					};

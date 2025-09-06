@@ -1,0 +1,10 @@
+node_modules/
+dist/
+coverage/
+*.md
+*.json
+*.yml
+*.yaml
+.git/
+.husky/
+CHANGELOG.md
