@@ -958,24 +958,30 @@ process.stdin.on('close', async () => {
 	server.close();
 });
 
-process.on('SIGINT', async () => {
-	console.error('Recibida señal SIGINT, cerrando servidor...');
-	if (browser) {
-		await browser.close();
+// Manejar cierre graceful
+async function gracefulShutdown(signal: string) {
+	console.error(`Recibida señal ${signal}, cerrando servidor...`);
+	try {
+		if (browser) {
+			await browser.close();
+		}
+	} catch (error) {
+		console.error('Error cerrando el navegador:', error);
 	}
 	process.exit(0);
-});
+}
 
-process.on('SIGTERM', async () => {
-	console.error('Recibida señal SIGTERM, cerrando servidor...');
-	if (browser) {
-		await browser.close();
-	}
-	process.exit(0);
-});
+process.on('SIGINT', () => gracefulShutdown('SIGINT'));
+process.on('SIGTERM', () => gracefulShutdown('SIGTERM'));
 
 // Iniciar servidor
-runServer().catch((error) => {
-	console.error('Error iniciando el servidor:', error);
-	process.exit(1);
-});
+async function main() {
+	try {
+		await runServer();
+	} catch (error) {
+		console.error('Error iniciando el servidor:', error);
+		process.exit(1);
+	}
+}
+
+main();
