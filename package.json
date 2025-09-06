@@ -1,0 +1,41 @@
+{
+	"name": "puppeteer-server",
+	"version": "1.0.0",
+	"description": "Servidor MCP personalizado para automatización de navegadores usando Puppeteer",
+	"license": "MIT",
+	"type": "module",
+	"bin": {
+		"puppeteer-server": "dist/index.js"
+	},
+	"main": "dist/index.js",
+	"files": [
+		"dist",
+		"README.md"
+	],
+	"scripts": {
+		"build": "tsc && chmod +x dist/*.js",
+		"dev": "tsc --watch",
+		"start": "node dist/index.js",
+		"prepare": "npm run build"
+	},
+	"dependencies": {
+		"@modelcontextprotocol/sdk": "^1.0.1",
+		"puppeteer": "^23.4.0"
+	},
+	"devDependencies": {
+		"@types/node": "^22.0.0",
+		"typescript": "^5.6.2"
+	},
+	"keywords": [
+		"mcp",
+		"model-context-protocol",
+		"puppeteer",
+		"browser-automation",
+		"web-scraping"
+	],
+	"author": "Tu Proyecto",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/tu-usuario/puppeteer-server.git"
+	}
+}

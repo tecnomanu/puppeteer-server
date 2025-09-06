@@ -1,0 +1,18 @@
+{
+	"mcpServers": {
+		"puppeteer-server": {
+			"command": "node",
+			"args": [
+				"/RUTA_ABSOLUTA_A_TU_PROYECTO/puppeteer-server/dist/index.js"
+			],
+			"env": {
+				"ALLOWED_ORIGINS": "https://example.com,https://*.trusted-domain.org,https://api.safe-site.com",
+				"MAX_SCREENSHOT_SIZE": "1048576",
+				"MAX_CONTENT_LENGTH": "524288",
+				"TOOL_TIMEOUT": "20000",
+				"ALLOW_DANGEROUS": "false",
+				"NODE_ENV": "production"
+			}
+		}
+	}
+}

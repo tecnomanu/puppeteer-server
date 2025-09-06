@@ -1,0 +1,14 @@
+{
+	"mcpServers": {
+		"puppeteer-server": {
+			"command": "node",
+			"args": [
+				"RUTA_ABSOLUTA_A_TU_PROYECTO/puppeteer-server/dist/index.js"
+			],
+			"env": {
+				"PUPPETEER_LAUNCH_OPTIONS": "{ \"headless\": false, \"defaultViewport\": { \"width\": 1280, \"height\": 720 } }",
+				"ALLOW_DANGEROUS": "false"
+			}
+		}
+	}
+}

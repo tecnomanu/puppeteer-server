@@ -1,0 +1,73 @@
+version: '3.8'
+
+services:
+    puppeteer-server:
+        build: .
+        container_name: puppeteer-server-secure
+
+        # Configuraciones de seguridad Docker
+        security_opt:
+            - no-new-privileges:true
+            - seccomp:unconfined # Necesario para Chromium, pero usar perfil personalizado en producción
+            - apparmor:unconfined # Necesario para Chromium, pero usar perfil personalizado en producción
+
+        # Eliminar todas las capabilities
+        cap_drop:
+            - ALL
+
+        # Usuario no privilegiado
+        user: '1001:1001'
+
+        # Filesystem de solo lectura con tmpfs para directorios necesarios
+        read_only: true
+        tmpfs:
+            - /tmp
+            - /var/tmp
+            - /dev/shm:size=2g,noexec,nosuid,nodev
+
+        # Variables de entorno de seguridad
+        environment:
+            - DOCKER_CONTAINER=true
+            - NODE_ENV=production
+            - ALLOWED_ORIGINS=https://example.com,https://*.example.org
+            - MAX_SCREENSHOT_SIZE=2097152
+            - MAX_CONTENT_LENGTH=1048576
+            - TOOL_TIMEOUT=30000
+            - ALLOW_DANGEROUS=false
+
+        # Límites de recursos
+        deploy:
+            resources:
+                limits:
+                    cpus: '1.0'
+                    memory: 1G
+                reservations:
+                    cpus: '0.25'
+                    memory: 256M
+
+        # Red aislada (sin acceso externo directo)
+        networks:
+            - isolated
+
+        # Healthcheck
+        healthcheck:
+            test: ['CMD', 'node', '-e', "console.log('Health OK')"]
+            interval: 30s
+            timeout: 10s
+            retries: 3
+            start_period: 40s
+
+        # Reinicio automático
+        restart: unless-stopped
+
+        # Logging estructurado
+        logging:
+            driver: 'json-file'
+            options:
+                max-size: '10m'
+                max-file: '3'
+
+networks:
+    isolated:
+        driver: bridge
+        internal: true # Sin acceso a internet externo
