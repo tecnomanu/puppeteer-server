@@ -12,20 +12,28 @@
 		"dist",
 		"README.md"
 	],
-	"scripts": {
-		"build": "tsc && chmod +x dist/*.js",
-		"dev": "tsc --watch",
-		"start": "node dist/index.js",
-		"prepare": "npm run build"
-	},
+  "scripts": {
+    "build": "tsc && chmod +x dist/*.js",
+    "dev": "tsc --watch",
+    "start": "node dist/index.js",
+    "test": "echo \"Tests will be implemented in future versions\" && exit 0",
+    "lint": "echo \"Linting will be implemented in future versions\" && exit 0",
+    "prepare": "npm run build && husky install",
+    "prepublishOnly": "npm run build && npm run test",
+    "release": "semantic-release"
+  },
 	"dependencies": {
 		"@modelcontextprotocol/sdk": "^1.0.1",
 		"puppeteer": "^23.4.0"
 	},
-	"devDependencies": {
-		"@types/node": "^22.0.0",
-		"typescript": "^5.6.2"
-	},
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "typescript": "^5.6.2",
+    "husky": "^9.0.11",
+    "semantic-release": "^24.0.0",
+    "@semantic-release/changelog": "^6.0.3",
+    "@semantic-release/git": "^10.0.1"
+  },
 	"keywords": [
 		"mcp",
 		"model-context-protocol",
@@ -34,8 +42,14 @@
 		"web-scraping"
 	],
 	"author": "Tu Proyecto",
-	"repository": {
-		"type": "git",
-		"url": "git+https://github.com/tu-usuario/puppeteer-server.git"
-	}
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tu-usuario/puppeteer-server.git"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
 }

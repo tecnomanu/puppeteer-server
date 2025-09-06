@@ -39,3 +39,20 @@ coverage/
 
 # Puppeteer
 .puppeteerrc.cjs
+
+# Semantic Release
+.nyc_output
+
+# Test output
+test-results/
+
+# Local configuration
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# OS generated files
+.DS_Store*
+ehthumbs.db
+Thumbs.db
