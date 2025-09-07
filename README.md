@@ -1,277 +1,284 @@
-# Puppeteer Server - Servidor MCP Personalizado
+# Puppeteer Server - Custom MCP Server
 
-Un servidor del Protocolo de Contexto de Modelo (MCP) que proporciona capacidades de automatización de navegadores usando Puppeteer. Este servidor permite a los LLMs interactuar con páginas web, tomar capturas de pantalla y ejecutar JavaScript en un entorno de navegador real.
+<p align="center">
+  <img src="banner.jpeg" alt="Puppeteer Server Banner" width="729" />
+</p>
 
-## 🚀 Características
+<p align="center">
+  <img src="https://img.shields.io/npm/v/puppeteer-server.svg" alt="Version" />
+  <img src="https://img.shields.io/npm/dm/puppeteer-server.svg" alt="Downloads" />
+  <img src="https://img.shields.io/github/license/tecnomanu/puppeteer-server" alt="License" />
+  <img src="https://img.shields.io/github/last-commit/tecnomanu/puppeteer-server" alt="Last Commit" />
+</p>
 
--   **Navegación web segura**: Navegar solo a dominios permitidos (whitelist)
--   **Capturas de pantalla**: Capturar imágenes con límites de tamaño
--   **Interacción con elementos**: Hacer clic, rellenar formularios, seleccionar opciones
--   **Ejecución de JavaScript**: Ejecutar código personalizado en el navegador
--   **Monitoreo de consola**: Capturar logs del navegador
--   **Configuración flexible**: Opciones personalizables de Puppeteer
--   **🔒 Seguridad avanzada**: Rate limiting, timeouts, auditoría y sandbox
--   **📊 Logging estructurado**: Auditoría completa de todas las operaciones
--   **🐳 Docker seguro**: Configuración hardened para contenedores
+A Model Context Protocol (MCP) server that provides secure browser automation capabilities using Puppeteer. This server enables LLMs to interact with web pages, take screenshots, and execute JavaScript in a real browser environment with enterprise-grade security features.
 
-## 🛠️ Instalación
+> 🇪🇸 **[Versión en Español](README_es.md)** | 🇺🇸 **English Version** | 🤖 **[Agent Version](AGENTS.md)**
 
-### Instalar dependencias
+## 🚀 Features
 
-```bash
-pnpm install
+- **Secure Web Navigation**: Navigate only to whitelisted domains
+- **Screenshot Capture**: Take screenshots with size limits and optimization
+- **Element Interaction**: Click, fill forms, select options, and hover
+- **JavaScript Execution**: Execute custom code in the browser context
+- **Console Monitoring**: Capture and access browser console logs
+- **Flexible Configuration**: Customizable Puppeteer launch options
+- **🔒 Advanced Security**: Rate limiting, timeouts, audit logging, and sandboxing
+- **📊 Structured Logging**: Complete audit trail of all operations
+- **🐳 Secure Docker**: Hardened container configuration
+
+## ⚙️ MCP Configuration
+
+Being an MCP server, the primary way to use Puppeteer Server is through MCP client configuration:
+
+### Method 1: Using NPX (Recommended)
+
+```json
+{
+  "mcpServers": {
+    "puppeteer-server": {
+      "command": "npx",
+      "args": ["-y", "puppeteer-server"],
+      "env": {
+        "ALLOWED_ORIGINS": "https://example.com,https://*.trusted.org",
+        "PUPPETEER_LAUNCH_OPTIONS": "{ \"headless\": false, \"defaultViewport\": { \"width\": 1280, \"height\": 720 } }",
+        "ALLOW_DANGEROUS": "false"
+      }
+    }
+  }
+}
 ```
 
-### Compilar el proyecto
+### Method 2: Using Local Build
+
+```json
+{
+  "mcpServers": {
+    "puppeteer-server-local": {
+      "command": "/opt/homebrew/bin/node",
+      "args": ["/absolute/path/to/puppeteer-server/dist/index.js"],
+      "env": {
+        "ALLOWED_ORIGINS": "https://github.com,https://*.github.io",
+        "MAX_SCREENSHOT_SIZE": "2097152",
+        "MAX_CONTENT_LENGTH": "1048576",
+        "TOOL_TIMEOUT": "30000",
+        "ALLOW_DANGEROUS": "false",
+        "PUPPETEER_LAUNCH_OPTIONS": "{ \"headless\": false, \"defaultViewport\": { \"width\": 1920, \"height\": 1080 } }"
+      }
+    }
+  }
+}
+```
+
+### Environment Variables
+
+- `PUPPETEER_LAUNCH_OPTIONS`: Launch options in JSON format
+- `ALLOWED_ORIGINS`: Comma-separated list of allowed domains
+- `ALLOW_DANGEROUS`: Allow dangerous arguments (`true`/`false`)
+- `MAX_SCREENSHOT_SIZE`: Maximum screenshot size in bytes
+- `MAX_CONTENT_LENGTH`: Maximum HTML content length
+- `TOOL_TIMEOUT`: Timeout per tool operation in milliseconds
+
+## 🛠️ Local Installation & Testing
+
+For local development and testing purposes:
+
+### Quick Start with NPX
 
 ```bash
+# Use directly without installation
+npx puppeteer-server
+```
+
+### Local Development Setup
+
+```bash
+# Clone and build the project
+git clone https://github.com/tecnomanu/puppeteer-server.git
+cd puppeteer-server
+pnpm install
 pnpm run build
 ```
 
-### Ejecutar en modo desarrollo
+### Development Mode
 
 ```bash
 pnpm run dev
 ```
 
-## 📋 Herramientas Disponibles
+### Local Testing (without Cursor)
+
+**Build and run:**
+```bash
+pnpm i
+pnpm build
+node dist/index.js
+```
+You should see "Puppeteer MCP Server started successfully".
+
+**Test with MCP Inspector (UI):**
+```bash
+npx @modelcontextprotocol/inspector node dist/index.js
+```
+Opens UI at http://localhost:6274; there you'll see tools/resources/prompts and can call them from the Tools tab. Usage examples and environment variable passing are in the inspector README.
+[GitHub - modelcontextprotocol.io](https://github.com/modelcontextprotocol/inspector)
+
+**Test with MCP Inspector (CLI):**
+```bash
+npx @modelcontextprotocol/inspector --cli node dist/index.js --method tools/list
+```
+You should get the list of tools exposed by your server.
+
+## 📋 Available Tools
 
 ### `puppeteer_navigate`
 
-Navegar a una URL específica.
+Navigate to a specific URL.
 
-**Parámetros:**
-
--   `url` (string, requerido): URL a la que navegar
--   `launchOptions` (object, opcional): Opciones de lanzamiento de Puppeteer
--   `allowDangerous` (boolean, opcional): Permitir opciones peligrosas
+**Parameters:**
+- `url` (string, required): URL to navigate to
+- `launchOptions` (object, optional): Puppeteer launch options
+- `allowDangerous` (boolean, optional): Allow dangerous options
 
 ### `puppeteer_screenshot`
 
-Tomar capturas de pantalla de la página o elementos específicos.
+Take screenshots of pages or specific elements.
 
-**Parámetros:**
-
--   `name` (string, requerido): Nombre para la captura
--   `selector` (string, opcional): Selector CSS del elemento
--   `width` (number, opcional): Ancho en píxeles (por defecto: 800)
--   `height` (number, opcional): Alto en píxeles (por defecto: 600)
--   `encoded` (boolean, opcional): Retornar como data URI base64
+**Parameters:**
+- `name` (string, required): Name for the screenshot
+- `selector` (string, optional): CSS selector for specific element
+- `width` (number, optional): Width in pixels (default: 800)
+- `height` (number, optional): Height in pixels (default: 600)
+- `encoded` (boolean, optional): Return as base64 data URI
 
 ### `puppeteer_click`
 
-Hacer clic en un elemento.
+Click on an element.
 
-**Parámetros:**
-
--   `selector` (string, requerido): Selector CSS del elemento
+**Parameters:**
+- `selector` (string, required): CSS selector of the element
 
 ### `puppeteer_fill`
 
-Rellenar campos de entrada.
+Fill input fields.
 
-**Parámetros:**
-
--   `selector` (string, requerido): Selector CSS del campo
--   `value` (string, requerido): Valor a introducir
+**Parameters:**
+- `selector` (string, required): CSS selector of the field
+- `value` (string, required): Value to input
 
 ### `puppeteer_select`
 
-Seleccionar opciones en elementos SELECT.
+Select options in SELECT elements.
 
-**Parámetros:**
-
--   `selector` (string, requerido): Selector CSS del SELECT
--   `value` (string, requerido): Valor a seleccionar
+**Parameters:**
+- `selector` (string, required): CSS selector of the SELECT element
+- `value` (string, required): Value to select
 
 ### `puppeteer_hover`
 
-Pasar el cursor sobre un elemento.
+Hover over an element.
 
-**Parámetros:**
-
--   `selector` (string, requerido): Selector CSS del elemento
+**Parameters:**
+- `selector` (string, required): CSS selector of the element
 
 ### `puppeteer_evaluate`
 
-Ejecutar JavaScript en la consola del navegador.
+Execute JavaScript in the browser console.
 
-**Parámetros:**
-
--   `script` (string, requerido): Código JavaScript a ejecutar
+**Parameters:**
+- `script` (string, required): JavaScript code to execute
 
 ### `puppeteer_wait_for_selector`
 
-Esperar a que aparezca un elemento.
+Wait for an element to appear.
 
-**Parámetros:**
-
--   `selector` (string, requerido): Selector CSS del elemento
--   `timeout` (number, opcional): Tiempo de espera en ms (por defecto: 30000)
+**Parameters:**
+- `selector` (string, required): CSS selector of the element
+- `timeout` (number, optional): Timeout in milliseconds (default: 30000)
 
 ### `puppeteer_get_page_content`
 
-Obtener el contenido HTML de la página.
+Get the HTML content of the page.
 
-**Parámetros:**
+**Parameters:**
+- `selector` (string, optional): Specific selector for partial content
 
--   `selector` (string, opcional): Selector específico para obtener contenido parcial
-
-## 📦 Recursos
+## 📦 Resources
 
 ### Console Logs (`console://logs`)
 
-Acceso a todos los logs de la consola del navegador en formato texto.
+Access to all browser console logs in text format.
 
 ### Screenshots (`screenshot://<name>`)
 
-Acceso a las capturas de pantalla tomadas, identificadas por su nombre.
+Access to captured screenshots, identified by name.
 
-## ⚙️ Configuración
 
-### Uso con Claude Desktop
+## 🛡️ Security
 
-```json
-{
-	"mcpServers": {
-		"puppeteer-server": {
-			"command": "node",
-			"args": [
-				"/ruta/absoluta/a/tu/proyecto/puppeteer-server/dist/index.js"
-			]
-		}
-	}
-}
-```
+This server implements multiple security layers to protect against attacks and malicious usage:
 
-### Uso con VS Code MCP
+### 🚫 Domain Whitelist
 
-```json
-{
-	"mcp": {
-		"servers": {
-			"puppeteer-server": {
-				"command": "node",
-				"args": [
-					"/ruta/absoluta/a/tu/proyecto/puppeteer-server/dist/index.js"
-				]
-			}
-		}
-	}
-}
-```
-
-### Variables de Entorno
-
--   `PUPPETEER_LAUNCH_OPTIONS`: Opciones de lanzamiento en formato JSON
--   `ALLOW_DANGEROUS`: Permitir argumentos peligrosos (`true`/`false`)
--   `DOCKER_CONTAINER`: Ejecutar en modo headless para Docker (`true`/`false`)
-
-### Ejemplo de configuración con opciones personalizadas
-
-```json
-{
-	"mcpServers": {
-		"puppeteer-server": {
-			"command": "node",
-			"args": [
-				"/ruta/absoluta/a/tu/proyecto/puppeteer-server/dist/index.js"
-			],
-			"env": {
-				"PUPPETEER_LAUNCH_OPTIONS": "{ \"headless\": false, \"defaultViewport\": { \"width\": 1280, \"height\": 720 } }",
-				"ALLOW_DANGEROUS": "false"
-			}
-		}
-	}
-}
-```
-
-## 🔧 Desarrollo
-
-### Scripts disponibles
-
--   `npm run build`: Compilar TypeScript a JavaScript
--   `npm run dev`: Ejecutar en modo desarrollo con watch
--   `npm run start`: Ejecutar el servidor compilado
--   `npm run prepare`: Preparar para publicación
-
-### Estructura del proyecto
-
-```
-puppeteer-server/
-├── src/
-│   └── index.ts          # Código fuente principal
-├── dist/                 # Código compilado
-├── package.json          # Configuración del paquete
-├── tsconfig.json         # Configuración de TypeScript
-└── README.md            # Esta documentación
-```
-
-## 🛡️ Seguridad
-
-Este servidor implementa múltiples capas de seguridad para proteger contra ataques y uso malicioso:
-
-### 🚫 Lista Blanca de Dominios
-
-**OBLIGATORIO**: Configure `ALLOWED_ORIGINS` para limitar los dominios accesibles:
+**MANDATORY**: Configure `ALLOWED_ORIGINS` to limit accessible domains:
 
 ```bash
-# Ejemplos de configuración
+# Production examples
 export ALLOWED_ORIGINS="https://example.com,https://*.example.org,https://api.trusted-site.com"
 
-# Para desarrollo (NO usar en producción)
+# Development only (DO NOT use in production)
 export ALLOWED_ORIGINS="*"
 ```
 
 ### ⚡ Rate Limiting
 
--   Máximo 30 solicitudes por minuto por herramienta
--   Protección automática contra ataques de denegación de servicio
--   Configuración personalizable via variables de entorno
+- Maximum 30 requests per minute per tool
+- Automatic protection against denial-of-service attacks
+- Configurable via environment variables
 
-### ⏱️ Timeouts y Límites
+### ⏱️ Timeouts and Limits
 
 ```bash
-export TOOL_TIMEOUT=30000           # Timeout por herramienta (30s)
-export MAX_SCREENSHOT_SIZE=2097152  # Máximo 2MB para capturas
-export MAX_CONTENT_LENGTH=1048576   # Máximo 1MB para contenido HTML
+export TOOL_TIMEOUT=30000           # 30s timeout per tool
+export MAX_SCREENSHOT_SIZE=2097152  # 2MB max for screenshots
+export MAX_CONTENT_LENGTH=1048576   # 1MB max for HTML content
 ```
 
-### 🔒 Argumentos Peligrosos
+### 🔒 Dangerous Arguments
 
-Argumentos bloqueados por defecto (requieren `ALLOW_DANGEROUS=true`):
+Arguments blocked by default (require `ALLOW_DANGEROUS=true`):
 
--   `--no-sandbox`, `--disable-setuid-sandbox`
--   `--single-process`, `--disable-web-security`
--   `--ignore-certificate-errors`
--   `--remote-debugging-port`, `--remote-debugging-address`
--   Y otros argumentos que reducen la seguridad
+- `--no-sandbox`, `--disable-setuid-sandbox`
+- `--single-process`, `--disable-web-security`
+- `--ignore-certificate-errors`
+- `--remote-debugging-port`, `--remote-debugging-address`
+- Other security-reducing arguments
 
-### 📋 Auditoría y Logging
+### 📋 Audit and Logging
 
-Todos los logs son estructurados en formato JSON para análisis:
+All logs are structured in JSON format for analysis:
 
 ```json
 {
-	"timestamp": "2024-01-01T12:00:00.000Z",
-	"level": "AUDIT",
-	"service": "puppeteer-server",
-	"toolName": "puppeteer_navigate",
-	"success": true,
-	"duration": 1250,
-	"resourceHash": "a1b2c3d4e5f6g7h8"
+  "timestamp": "2024-01-01T12:00:00.000Z",
+  "level": "AUDIT",
+  "service": "puppeteer-server",
+  "toolName": "puppeteer_navigate",
+  "success": true,
+  "duration": 1250,
+  "resourceHash": "a1b2c3d4e5f6g7h8"
 }
 ```
 
-### 🐳 Docker Seguro
+### 🐳 Secure Docker
 
-Configuración Docker hardened incluida:
+Hardened Docker configuration included:
 
 ```bash
-# Construcción segura
+# Secure build
 docker build -t puppeteer-server .
 
-# Ejecución con máxima seguridad
+# Maximum security execution
 docker run --cap-drop=ALL \
   --security-opt=no-new-privileges:true \
   --user 1001:1001 \
@@ -281,139 +288,138 @@ docker run --cap-drop=ALL \
   -e ALLOW_DANGEROUS=false \
   puppeteer-server
 
-# O usar docker-compose con configuración de seguridad
+# Or use docker-compose with security configuration
 docker-compose -f docker-compose.security.yml up
 ```
 
-### 🔧 Configuración de Seguridad Completa
+### ⚠️ Security Warnings
 
-```json
-{
-	"mcpServers": {
-		"puppeteer-server": {
-			"command": "node",
-			"args": ["/ruta/a/puppeteer-server/dist/index.js"],
-			"env": {
-				"ALLOWED_ORIGINS": "https://example.com,https://*.trusted.org",
-				"MAX_SCREENSHOT_SIZE": "1048576",
-				"MAX_CONTENT_LENGTH": "524288",
-				"TOOL_TIMEOUT": "20000",
-				"ALLOW_DANGEROUS": "false",
-				"NODE_ENV": "production"
-			}
-		}
-	}
-}
-```
-
-### ⚠️ Advertencias de Seguridad
-
-1. **NUNCA** usar `ALLOWED_ORIGINS="*"` en producción
-2. **SIEMPRE** ejecutar en contenedores con usuario no privilegiado
-3. **EVITAR** argumentos `--no-sandbox` a menos que sea absolutamente necesario
-4. **MONITOREAR** logs de auditoría regularmente
-5. **ACTUALIZAR** dependencias regularmente
+1. **NEVER** use `ALLOWED_ORIGINS="*"` in production
+2. **ALWAYS** run in containers with non-privileged users
+3. **AVOID** `--no-sandbox` arguments unless absolutely necessary
+4. **MONITOR** audit logs regularly
+5. **UPDATE** dependencies regularly
 
 ## 🧪 Testing
 
-El proyecto incluye una suite completa de tests con **43 test cases**:
+The project includes a comprehensive test suite with **43 test cases**:
 
-- **Tests Unitarios**: Validación de funciones de seguridad y herramientas individuales
-- **Tests de Integración**: Verificación del servidor MCP completo  
-- **Tests de Configuración**: Validación de ejemplos de configuración
+- **Unit Tests**: Validation of security functions and individual tools
+- **Integration Tests**: Complete MCP server verification
+- **Configuration Tests**: Validation of configuration examples
 
 ```bash
-# Ejecutar todos los tests
+# Run all tests
 pnpm test
 
-# Tests con cobertura de código
+# Tests with code coverage
 pnpm run test:coverage
 
-# Tests en modo desarrollo (watch)
+# Development mode tests (watch)
 pnpm run test:watch
 ```
 
-### 📊 Cobertura de Tests
+### 📊 Test Coverage
 
-Los tests cubren:
-- ✅ Validación de orígenes y dominios permitidos
-- ✅ Rate limiting y timeouts
-- ✅ Generación de hashes y auditoría
-- ✅ Configuración de seguridad
-- ✅ Herramientas MCP individuales
-- ✅ Manejo de errores y excepciones
-- ✅ Validación de ejemplos de configuración
+Tests cover:
+- ✅ Domain and origin validation
+- ✅ Rate limiting and timeouts
+- ✅ Hash generation and auditing
+- ✅ Security configuration
+- ✅ Individual MCP tools
+- ✅ Error handling and exceptions
+- ✅ Configuration example validation
 
-## 📁 Ejemplos de Configuración
+## 📁 Configuration Examples
 
-La carpeta `examples/` contiene configuraciones listas para usar:
+The `examples/` folder contains ready-to-use configurations:
 
-| Archivo | Descripción | Uso Recomendado |
-|---------|-------------|----------------|
-| `mcp-config-example.json` | Configuración básica | Desarrollo local |
-| `mcp-config-secure-example.json` | Configuración segura | Producción |
-| `docker-mcp-config.json` | Con Docker hardening | Contenedores |
-| `claude-desktop-config.json` | Optimizado para Claude | Claude Desktop |
+| File | Description | Recommended Use |
+|------|-------------|----------------|
+| `mcp-config-example.json` | Basic configuration | Local development |
+| `mcp-config-secure-example.json` | Secure configuration | Production |
+| `docker-mcp-config.json` | With Docker hardening | Containers |
+| `claude-desktop-config.json` | Optimized for Claude | Claude Desktop |
 
-Ver [examples/README.md](examples/README.md) para detalles completos sobre cada configuración.
+See [examples/README.md](examples/README.md) for complete details on each configuration.
 
-## 🛠️ Desarrollo
+## 🛠️ Development
 
 ```bash
-# Desarrollo con watch mode
+# Development with watch mode
 pnpm run dev
 
-# Linting y formato de código
-pnpm run lint          # Corregir errores automáticamente
-pnpm run lint:check    # Solo verificar errores
-pnpm run format        # Formatear código con Prettier
-pnpm run format:check  # Verificar formato
+# Linting and code formatting
+pnpm run lint          # Fix errors automatically
+pnpm run lint:check    # Only check errors
+pnpm run format        # Format code with Prettier
+pnpm run format:check  # Check formatting
 
 # Testing
-pnpm test              # Ejecutar todos los tests
-pnpm run test:watch    # Tests en modo watch
-pnpm run test:coverage # Tests con reporte de cobertura
+pnpm test              # Run all tests
+pnpm run test:watch    # Tests in watch mode
+pnpm run test:coverage # Tests with coverage report
 
-# Construcción
+# Build
 pnpm run build
 ```
 
-### 🔧 Herramientas de Calidad
+### 🔧 Quality Tools
 
-- **ESLint**: Análisis estático con reglas de seguridad
-- **Prettier**: Formateo consistente de código
-- **Jest**: Framework de testing con cobertura
-- **Husky**: Pre-commit hooks para calidad
-- **TypeScript**: Tipado estático y compilación
+- **ESLint**: Static analysis with security rules
+- **Prettier**: Consistent code formatting
+- **Jest**: Testing framework with coverage
+- **Husky**: Pre-commit hooks for quality
+- **TypeScript**: Static typing and compilation
 
-## 📄 Licencia
 
-MIT License - Eres libre de usar, modificar y distribuir este software.
+## 🤝 Contributing
 
-## 🤝 Contribuciones
+Contributions are welcome! Please follow our process:
 
-Las contribuciones son bienvenidas. Por favor, asegúrate de:
+- **Fork** → create feature branch (`feat/your-feature`)
+- **Test** → run `pnpm test` & ensure all checks pass
+- **Document** → update docs and add examples if needed
+- **PR** → open with context: why + screenshots/logs
 
-1. Seguir las convenciones de código existentes
-2. Agregar pruebas para nuevas funcionalidades
-3. Actualizar la documentación según sea necesario
+📋 Please read our [Contributing Guide](CONTRIBUTING.md) and [Code of Conduct](CODE_OF_CONDUCT.md) before contributing.
 
-## 🐛 Resolución de Problemas
+All discussions happen on **GitHub Issues**.
 
-### El navegador no se abre
+## 🐛 Troubleshooting
 
--   Verifica que tienes Chrome/Chromium instalado
--   Comprueba los permisos de ejecución
--   Revisa las opciones de lanzamiento
+### Browser doesn't open
 
-### Errores de timeout
+- Verify Chrome/Chromium is installed
+- Check execution permissions
+- Review launch options
 
--   Aumenta el valor de timeout en `puppeteer_wait_for_selector`
--   Verifica que la página se carga correctamente
--   Comprueba la conectividad de red
+### Timeout errors
 
-### Problemas con capturas de pantalla
+- Increase timeout value in `puppeteer_wait_for_selector`
+- Verify the page loads correctly
+- Check network connectivity
 
--   Asegúrate de que la página esté completamente cargada
--   Verifica que el selector CSS sea correcto
--   Comprueba las dimensiones de viewport
+### Screenshot issues
+
+- Ensure the page is fully loaded
+- Verify the CSS selector is correct
+- Check viewport dimensions
+
+## 🔗 Additional Resources
+
+- **Spanish documentation**: [README_es.md](README_es.md)
+- **Agent setup guide**: [AGENTS.md](AGENTS.md)
+- **Project repository**: https://github.com/tecnomanu/puppeteer-server
+- **MCP Protocol**: https://modelcontextprotocol.io/
+
+
+## 📄 License
+
+**MIT** – do whatever you want, just keep the copyright.
+
+**Happy coding!** 💙
+
+---
+
+🇦🇷 **Made with ❤️ in Argentina**

@@ -542,7 +542,7 @@ async function handleToolCall(
 	args: any
 ): Promise<CallToolResult> {
 	const startTime = Date.now();
-	let auditLog: Partial<AuditLog> = {
+	const auditLog: Partial<AuditLog> = {
 		toolName: name,
 		args: {
 			...args,

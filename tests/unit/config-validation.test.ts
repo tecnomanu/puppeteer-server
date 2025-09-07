@@ -74,8 +74,9 @@ describe('MCP Configuration Examples', () => {
 
             const server = config.mcpServers['puppeteer-server'];
             
-            expect(server.command).toBe('node');
-            expect(server.args).toContain('RUTA_ABSOLUTA_A_TU_PROYECTO/puppeteer-server/dist/index.js');
+            expect(server.command).toBe('npx');
+            expect(server.args).toContain('-y');
+            expect(server.args).toContain('puppeteer-server');
             expect(server.env).toHaveProperty('ALLOW_DANGEROUS');
             expect(server.env.ALLOW_DANGEROUS).toBe('false');
         });
@@ -178,15 +179,18 @@ describe('MCP Configuration Examples', () => {
             const content = fs.readFileSync(configPath, 'utf8');
             const config = JSON.parse(content);
 
-            const server = config.mcpServers['puppeteer-server'];
+            const server = config.mcpServers['puppeteer-server-local'];
             
             // Verificar dominios relevantes para Claude
             const allowedOrigins = server.env.ALLOWED_ORIGINS;
             expect(allowedOrigins).toContain('github.com');
-            expect(allowedOrigins).toContain('anthropic.com');
+            expect(allowedOrigins).toContain('github.io');
             
             // Verificar configuración de desarrollo
             expect(server.env.NODE_ENV).toBe('development');
+            
+            // Verificar que usa homebrew node
+            expect(server.command).toBe('/opt/homebrew/bin/node');
         });
     });
 
