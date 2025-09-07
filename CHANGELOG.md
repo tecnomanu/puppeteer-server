@@ -1,3 +1,10 @@
+## [1.5.4](https://github.com/tecnomanu/puppeteer-server/compare/v1.5.3...v1.5.4) (2025-09-07)
+
+
+### Bug Fixes
+
+* 🐛 improve server initialization and graceful shutdown handling ([031b228](https://github.com/tecnomanu/puppeteer-server/commit/031b22821d06f214810aa3254649411308429839))
+
 ## [1.5.3](https://github.com/tecnomanu/puppeteer-server/compare/v1.5.2...v1.5.3) (2025-09-06)
 
 
