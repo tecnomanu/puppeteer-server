@@ -1,8 +1,9 @@
 ---
-description: 
-globs: 
+description:
+globs:
 alwaysApply: true
 ---
+
 # Commit Conventions
 
 Follow **Conventional Commits** with emojis and semantic-release automation.
@@ -19,38 +20,57 @@ Follow **Conventional Commits** with emojis and semantic-release automation.
 
 ## Common Types
 
-| Type  | Emoji | Impact | Example |
-|-------|-------|--------|---------|
+| Type  | Emoji | Impact | Example                            |
+| ----- | ----- | ------ | ---------------------------------- |
 | feat  | ✨    | MINOR  | `feat: ✨ add user authentication` |
-| fix   | 🐛    | PATCH  | `fix: 🐛 handle timeout error` |
-| docs  | 📝    | None   | `docs: 📝 update README` |
-| chore | 🔧    | None   | `chore: 🔧 bump dependencies` |
+| fix   | 🐛    | PATCH  | `fix: 🐛 handle timeout error`     |
+| docs  | 📝    | None   | `docs: 📝 update README`           |
+| chore | 🔧    | None   | `chore: 🔧 bump dependencies`      |
 
-## Breaking Changes (MAJOR version)
+## ⚠️ CRITICAL: Breaking Changes (MAJOR version)
 
-For major version bumps, use **BREAKING CHANGE** footer:
+**🚨 WARNING: This project is PUBLISHED to NPM. Be EXTREMELY careful with BREAKING CHANGES!**
 
-### ✅ Correct:
+### When to Use BREAKING CHANGE:
+
+- **API changes** that break existing functionality
+- **Removing features** or functions
+- **Changing function signatures**
+- **Modifying configuration formats** that require user action
+- **NOT for documentation restructuring** or internal changes
+
+### ✅ Correct (Real Breaking Change):
+
 ```bash
-feat: 🎉 redesign authentication system
+feat: 🎉 redesign authentication API
 
-BREAKING CHANGE: Token format changed, requires client updates
+BREAKING CHANGE: Token format changed from JWT to OAuth2, requires client updates
 ```
 
-### ❌ Wrong:
-```bash
-# Don't use exclamation mark
-feat!: ✨ breaking change
+### ❌ WRONG (Don't use BREAKING CHANGE for):
 
-# Don't make super long single-line messages
-feat: 🎉 very long message with breaking change info all in one line BREAKING CHANGE: xyz
+```bash
+# Documentation changes - use docs: instead
+feat: ✨ complete documentation restructure
+BREAKING CHANGE: Documentation structure reorganized
+
+# Internal changes - use feat: or refactor: instead
+feat: ✨ improve internal structure
+BREAKING CHANGE: Code organization changed
 ```
+
+### Safe Alternatives:
+
+- **Documentation**: `docs: 📝 restructure README and add translations`
+- **Internal changes**: `refactor: ♻️ improve code organization`
+- **New features**: `feat: ✨ add new configuration examples`
 
 ## Author Identity (MANDATORY)
 
 **ALWAYS use `--author` for AI commits:**
 
 ### AI Assistant Commits:
+
 ```bash
 # For Claude/Sonnet
 git commit --author="Agent AI <agent.ai@assistant.local>" -m "feat: ✨ add feature"
@@ -60,6 +80,7 @@ git commit --author="Agent AI <agent.ai@assistant.local>" -m "fix: 🐛 resolve 
 ```
 
 ### Human Developer Commits:
+
 ```bash
 # Use normal identity (no --author needed)
 git commit -m "feat: ✨ implement feature"
@@ -97,43 +118,53 @@ Always include an appropriate emoji at the first of your commit message descript
 
 When your changes affect the semantic versioning of the package, use these types:
 
-| Emoji | Type | Description | Versioning Impact |
-|-------|------|-------------|------------------|
-| ✨ | feat | New feature | MINOR |
-| 🐛 | fix | Bug fix | PATCH |
-| 🎉 | feat or fix | Breaking change (with BREAKING CHANGE footer) | MAJOR |
+| Emoji | Type        | Description                                   | Versioning Impact |
+| ----- | ----------- | --------------------------------------------- | ----------------- |
+| ✨    | feat        | New feature                                   | MINOR             |
+| 🐛    | fix         | Bug fix                                       | PATCH             |
+| 🎉    | feat or fix | Breaking change (with BREAKING CHANGE footer) | MAJOR             |
 
-For major version bumps (BREAKING CHANGES), you MUST:
+**🚨 BEFORE using BREAKING CHANGE, ask yourself:**
+
+1. **Will this break existing users' code?** If NO → Don't use BREAKING CHANGE
+2. **Is this just documentation/internal changes?** If YES → Use `docs:` or `refactor:`
+3. **Does this require users to change their implementation?** If NO → Don't use BREAKING CHANGE
+
+For **REAL** major version bumps (BREAKING CHANGES), you MUST:
+
 1. Use a normal type (like `feat` or `fix` without exclamation mark)
 2. Include a `BREAKING CHANGE:` section in the footer
+3. **ONLY for actual API/functionality breaking changes**
 
-Example:
+Example of REAL breaking change:
+
 ```
-feat:  🎉 redesign user authentication system
+feat: 🎉 redesign user authentication system
 
 Complete overhaul of authentication flow and API
 
 BREAKING CHANGE: The auth token format has changed and all clients will need to be updated
 ```
 
-> Important: Based on our testing, using exclamation marks (!) in the type can cause issues with our semantic-release setup. The footer `BREAKING CHANGE:` is sufficient to trigger a major version bump.
+> **Critical**: This project is published to NPM. BREAKING CHANGE creates MAJOR versions (1.x.x → 2.x.x). Use ONLY for real API breaks, not documentation or internal changes!
 
 ### Non-versioning Commits
 
 For changes that don't affect the version number:
 
-| Emoji | Type | Description |
-|-------|------|-------------|
-| 📝 | docs | Documentation changes |
-| 🔧 | chore | Maintenance tasks |
-| ♻️ | refactor | Code changes that neither fix bugs nor add features |
-| 🎨 | style | Code style/formatting changes |
-| ⚡️ | perf | Performance improvements |
-| ✅ | test | Adding or correcting tests |
-| 🔨 | build | Build system changes |
-| 🚀 | ci | CI configuration changes |
+| Emoji | Type     | Description                                         |
+| ----- | -------- | --------------------------------------------------- |
+| 📝    | docs     | Documentation changes                               |
+| 🔧    | chore    | Maintenance tasks                                   |
+| ♻️    | refactor | Code changes that neither fix bugs nor add features |
+| 🎨    | style    | Code style/formatting changes                       |
+| ⚡️   | perf     | Performance improvements                            |
+| ✅    | test     | Adding or correcting tests                          |
+| 🔨    | build    | Build system changes                                |
+| 🚀    | ci       | CI configuration changes                            |
 
 Example:
+
 ```
 docs: 📝 update README with new architecture documentation
 ```
@@ -150,6 +181,7 @@ docs: 📝 update README with new architecture documentation
 ## Branch Naming
 
 Follow a similar convention for branch names:
+
 - `feature/short-description` - For new features
 - `fix/issue-description` - For bug fixes
 - `docs/update-area` - For documentation updates
