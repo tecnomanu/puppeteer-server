@@ -1,3 +1,15 @@
+# [2.0.0](https://github.com/tecnomanu/puppeteer-server/compare/v1.5.4...v2.0.0) (2025-09-07)
+
+
+### Features
+
+* ✨ complete documentation restructure and enhancement ([f66d203](https://github.com/tecnomanu/puppeteer-server/commit/f66d2035b5286b7f3c870f12b446310a610a0978))
+
+
+### BREAKING CHANGES
+
+* Documentation structure completely reorganized to prioritize MCP usage over local installation
+
 ## [1.5.4](https://github.com/tecnomanu/puppeteer-server/compare/v1.5.3...v1.5.4) (2025-09-07)
 
 
