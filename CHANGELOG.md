@@ -1,3 +1,10 @@
+# [2.1.0](https://github.com/tecnomanu/puppeteer-server/compare/v2.0.0...v2.1.0) (2025-09-08)
+
+
+### Features
+
+* **http:** ✨ add keep-alive, auth checks and docs ([37bb2e3](https://github.com/tecnomanu/puppeteer-server/commit/37bb2e353ce8023e68ab0ffec25c93d0c633aca8))
+
 # [2.0.0](https://github.com/tecnomanu/puppeteer-server/compare/v1.5.4...v2.0.0) (2025-09-07)
 
 
