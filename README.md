@@ -89,6 +89,7 @@ The server can run over HTTP using **Server-Sent Events** when `MCP_TRANSPORT=ht
 - `PORT`: listening port (default `3333`).
 - `MCP_BEARER`: optional bearer token required in `Authorization` header.
 - `ALLOWED_ORIGINS`: comma-separated whitelist of allowed `Origin` headers (`*` to allow any in development).
+- `MCP_BODY_LIMIT`: max JSON body size accepted by `/messages` (default `1mb`).
 
 ### Quick start
 
@@ -102,6 +103,8 @@ Verify the SSE endpoint:
 ```bash
 curl -I -H 'Accept: text/event-stream' http://localhost:3333/sse
 ```
+
+A basic health check is available at `GET /health`.
 
 For STDIO mode (default):
 

@@ -14,6 +14,7 @@ const log = (...a: any[]) => console.error('[puppeteer-server]', ...a);
 			port: Number(process.env.PORT || 3333),
 		});
 		log('HTTP/SSE mode ready');
+		process.stdin.pause();
 		return;
 	}
 

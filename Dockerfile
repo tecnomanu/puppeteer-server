@@ -38,7 +38,8 @@ ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true \
     NODE_ENV=production \
     MCP_TRANSPORT=stdio \
     MCP_BEARER="" \
-    ALLOWED_ORIGINS=""
+    ALLOWED_ORIGINS="" \
+    MCP_BODY_LIMIT=1mb
 
 WORKDIR /app
 
@@ -56,6 +57,7 @@ USER puppeteer
 # Configurar límites de seguridad
 # Estas variables deben ser configuradas según el entorno
 ENV ALLOWED_ORIGINS="" \
+    MCP_BODY_LIMIT=1mb \
     MAX_SCREENSHOT_SIZE=2097152 \
     MAX_CONTENT_LENGTH=1048576 \
     TOOL_TIMEOUT=30000 \

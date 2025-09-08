@@ -32,6 +32,7 @@ services:
             - MCP_TRANSPORT=http
             - MCP_BEARER=
             - ALLOWED_ORIGINS=https://example.com,https://*.example.org
+            - MCP_BODY_LIMIT=1mb
             - MAX_SCREENSHOT_SIZE=2097152
             - MAX_CONTENT_LENGTH=1048576
             - TOOL_TIMEOUT=30000

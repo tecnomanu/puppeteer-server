@@ -8,7 +8,7 @@ export async function startHttpServer(
 	opts?: { port?: number }
 ) {
 	const app = express();
-	app.use(express.json({ limit: '2mb' }));
+	app.use(express.json({ limit: process.env.MCP_BODY_LIMIT ?? '1mb' }));
 
 	const server = new Server(
 		{ name: 'puppeteer-server', version: pkg.version },
@@ -20,6 +20,9 @@ export async function startHttpServer(
 	const POST_ENDPOINT = '/messages';
 
 	app.post(POST_ENDPOINT, async (req: Request, res: Response) => {
+		if (!isAuthorized(req)) return res.status(401).end();
+		if (!isAllowedOrigin(req)) return res.status(403).end();
+
 		const sessionId = String(req.query.sessionId || '');
 		if (!sessionId)
 			return res.status(400).json({ error: 'Missing sessionId' });
@@ -39,10 +42,32 @@ export async function startHttpServer(
 		if (!isAuthorized(req)) return res.status(401).end();
 		if (!isAllowedOrigin(req)) return res.status(403).end();
 
+		res.setHeader('Content-Type', 'text/event-stream');
+		res.setHeader('Cache-Control', 'no-cache');
+		res.setHeader('Connection', 'keep-alive');
+		res.setHeader('X-Accel-Buffering', 'no');
+		res.flushHeaders?.();
+
+		(res as any).writeHead = () => res;
+
 		const transport = new SSEServerTransport(POST_ENDPOINT, res);
 		transports.set(transport.sessionId, transport);
 
-		res.on('close', () => transports.delete(transport.sessionId));
+		const keepAlive = setInterval(() => {
+			try {
+				res.write(':keep-alive\n\n');
+			} catch {
+				/* ignore */
+			}
+		}, 30000);
+
+		const cleanup = () => {
+			clearInterval(keepAlive);
+			transports.delete(transport.sessionId);
+		};
+		res.on('close', cleanup);
+		res.on('error', cleanup);
+
 		try {
 			await server.connect(transport);
 		} catch (e) {
@@ -52,8 +77,12 @@ export async function startHttpServer(
 			} catch {
 				/* ignore */
 			}
-			transports.delete(transport.sessionId);
+			cleanup();
 		}
+	});
+
+	app.get('/health', (_req: Request, res: Response) => {
+		res.json({ ok: true, transport: 'http', version: pkg.version });
 	});
 
 	app.post('/mcp', (_req: Request, res: Response) => {
@@ -78,6 +107,7 @@ export async function startHttpServer(
 			.map((s) => s.trim());
 		if (list.includes('*')) return true;
 		const origin = String(req.headers.origin || '');
-		return !!origin && list.includes(origin);
+		if (!origin) return true;
+		return list.includes(origin);
 	}
 }
