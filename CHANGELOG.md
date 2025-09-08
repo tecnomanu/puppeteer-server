@@ -1,3 +1,10 @@
+## [2.1.1](https://github.com/tecnomanu/puppeteer-server/compare/v2.1.0...v2.1.1) (2025-09-08)
+
+
+### Bug Fixes
+
+* 🐛 improve Node.js compatibility and MCP standards compliance ([3ca38c1](https://github.com/tecnomanu/puppeteer-server/commit/3ca38c11293f05a40a6492b44e0297f9b9528318))
+
 # [2.1.0](https://github.com/tecnomanu/puppeteer-server/compare/v2.0.0...v2.1.0) (2025-09-08)
 
 
