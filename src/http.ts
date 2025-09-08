@@ -2,13 +2,15 @@ import { Server } from '@modelcontextprotocol/sdk/server/index.js';
 import { SSEServerTransport } from '@modelcontextprotocol/sdk/server/sse.js';
 import express, { Request, Response } from 'express';
 import { readFileSync } from 'fs';
-import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
+import { fileURLToPath } from 'url';
 
 // Compatible JSON import for Node.js v22 and earlier
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
-const pkg = JSON.parse(readFileSync(join(__dirname, '../package.json'), 'utf8'));
+const pkg = JSON.parse(
+	readFileSync(join(__dirname, '../package.json'), 'utf8')
+);
 
 export async function startHttpServer(
 	registerTools: (s: Server) => void,

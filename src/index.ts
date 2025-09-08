@@ -10,7 +10,9 @@ import { dirname, join } from 'path';
 // Compatible JSON import for Node.js v22 and earlier
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
-const pkg = JSON.parse(readFileSync(join(__dirname, '../package.json'), 'utf8'));
+const pkg = JSON.parse(
+	readFileSync(join(__dirname, '../package.json'), 'utf8')
+);
 
 const log = (...a: any[]) => console.error('[puppeteer-server]', ...a);
 
