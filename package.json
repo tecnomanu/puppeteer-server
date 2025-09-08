@@ -1,6 +1,6 @@
 {
 	"name": "puppeteer-server",
-	"version": "2.1.1",
+	"version": "2.1.0",
 	"description": "Servidor MCP personalizado para automatización de navegadores usando Puppeteer",
 	"license": "MIT",
 	"type": "module",

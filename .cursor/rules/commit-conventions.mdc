@@ -86,6 +86,34 @@ git commit --author="Agent AI <agent.ai@assistant.local>" -m "fix: 🐛 resolve 
 git commit -m "feat: ✨ implement feature"
 ```
 
+## 🚀 Automated Release Process
+
+**This project uses GitHub Actions + semantic-release for FULL AUTOMATION:**
+
+### How It Works:
+1. **Write correct commit message** (following conventions above)
+2. **Push to main branch** (`git push origin main`)
+3. **GitHub Actions automatically:**
+   - Analyzes commit messages
+   - Determines version bump (MAJOR/MINOR/PATCH)
+   - Updates `package.json` version
+   - Generates `CHANGELOG.md`
+   - Creates Git tag
+   - Publishes to NPM
+   - Creates GitHub release
+
+### ⚠️ DO NOT manually:
+- ❌ Run `npm version`
+- ❌ Run `pnpm release` 
+- ❌ Edit `package.json` version
+- ❌ Edit `CHANGELOG.md`
+- ❌ Create Git tags
+
+### ✅ Only do:
+1. **Commit with correct type** (`feat:`/`fix:`/`docs:`/etc.)
+2. **Push to main**
+3. **Wait for GitHub Actions** to complete
+
 ## Key Rules
 
 1. **Keep commits short**: Title under 72 characters
@@ -93,6 +121,7 @@ git commit -m "feat: ✨ implement feature"
 3. **Always use --author**: For AI-generated commits
 4. **BREAKING CHANGE footer**: For major version bumps
 5. **English only**: All commit messages in English
+6. **Let GitHub Actions handle versioning**: Never manually version
 
 ## Language
 
