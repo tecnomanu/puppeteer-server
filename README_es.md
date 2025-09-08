@@ -1,3 +1,5 @@
+# Puppeteer Server - Servidor MCP Personalizado
+
 <p align="center">
   <img src="banner.jpeg" alt="Puppeteer Server Banner" width="729" />
 </p>
@@ -8,8 +10,6 @@
   <img src="https://img.shields.io/github/license/tecnomanu/puppeteer-server" alt="License" />
   <img src="https://img.shields.io/github/last-commit/tecnomanu/puppeteer-server" alt="Last Commit" />
 </p>
-
-# Puppeteer Server - Servidor MCP Personalizado
 
 Un servidor del Protocolo de Contexto de Modelo (MCP) que proporciona capacidades de automatización de navegadores usando Puppeteer. Este servidor permite a los LLMs interactuar con páginas web, tomar capturas de pantalla y ejecutar JavaScript en un entorno de navegador real con características de seguridad de nivel empresarial.
 
