@@ -35,7 +35,11 @@ RUN apk add --no-cache \
 ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true \
     PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium-browser \
     DOCKER_CONTAINER=true \
-    NODE_ENV=production
+    NODE_ENV=production \
+    MCP_TRANSPORT=stdio \
+    MCP_BEARER="" \
+    ALLOWED_ORIGINS="" \
+    MCP_BODY_LIMIT=1mb
 
 WORKDIR /app
 
@@ -53,10 +57,14 @@ USER puppeteer
 # Configurar límites de seguridad
 # Estas variables deben ser configuradas según el entorno
 ENV ALLOWED_ORIGINS="" \
+    MCP_BODY_LIMIT=1mb \
     MAX_SCREENSHOT_SIZE=2097152 \
     MAX_CONTENT_LENGTH=1048576 \
     TOOL_TIMEOUT=30000 \
     ALLOW_DANGEROUS=false
+
+
+EXPOSE 3333
 
 # Exponer información de salud (no puerto de red)
 HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \

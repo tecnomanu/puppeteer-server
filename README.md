@@ -13,7 +13,7 @@
 
 A Model Context Protocol (MCP) server that provides secure browser automation capabilities using Puppeteer. This server enables LLMs to interact with web pages, take screenshots, and execute JavaScript in a real browser environment with enterprise-grade security features.
 
-> 🇪🇸 **[Versión en Español](README_es.md)** | 🇺🇸 **English Version** | 🤖 **[Agent Version](AGENTS.md)**
+> 🇪🇸 **[Versión en Español](README_es.md)** | 🇺🇸 **English Version** | 🤖 **[Agent Setup Guide](README_FOR_AGENTS.md)**
 
 ## 🚀 Features
 
@@ -78,6 +78,40 @@ Being an MCP server, the primary way to use Puppeteer Server is through MCP clie
 - `MAX_SCREENSHOT_SIZE`: Maximum screenshot size in bytes
 - `MAX_CONTENT_LENGTH`: Maximum HTML content length
 - `TOOL_TIMEOUT`: Timeout per tool operation in milliseconds
+
+## HTTP/SSE mode
+
+The server can run over HTTP using **Server-Sent Events** when `MCP_TRANSPORT=http`. Useful for n8n or other MCP clients that communicate over HTTP.
+
+### Environment variables
+
+- `MCP_TRANSPORT`: set to `http` to enable HTTP mode (defaults to `stdio`).
+- `PORT`: listening port (default `3333`).
+- `MCP_BEARER`: optional bearer token required in `Authorization` header.
+- `ALLOWED_ORIGINS`: comma-separated whitelist of allowed `Origin` headers (`*` to allow any in development).
+- `MCP_BODY_LIMIT`: max JSON body size accepted by `/messages` (default `1mb`).
+
+### Quick start
+
+```bash
+pnpm build
+MCP_TRANSPORT=http PORT=3333 node dist/index.js
+```
+
+Verify the SSE endpoint:
+
+```bash
+curl -I -H 'Accept: text/event-stream' http://localhost:3333/sse
+```
+
+A basic health check is available at `GET /health`.
+
+For STDIO mode (default):
+
+```bash
+pnpm build
+npx @modelcontextprotocol/inspector --cli node dist/index.js --method tools/list
+```
 
 ## 🛠️ Local Installation & Testing
 
@@ -409,7 +443,7 @@ All discussions happen on **GitHub Issues**.
 ## 🔗 Additional Resources
 
 - **Spanish documentation**: [README_es.md](README_es.md)
-- **Agent setup guide**: [AGENTS.md](AGENTS.md)
+- **Agent setup guide**: [README_FOR_AGENTS.md](README_FOR_AGENTS.md)
 - **Project repository**: https://github.com/tecnomanu/puppeteer-server
 - **MCP Protocol**: https://modelcontextprotocol.io/
 

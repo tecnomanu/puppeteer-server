@@ -29,7 +29,10 @@ services:
         environment:
             - DOCKER_CONTAINER=true
             - NODE_ENV=production
+            - MCP_TRANSPORT=http
+            - MCP_BEARER=
             - ALLOWED_ORIGINS=https://example.com,https://*.example.org
+            - MCP_BODY_LIMIT=1mb
             - MAX_SCREENSHOT_SIZE=2097152
             - MAX_CONTENT_LENGTH=1048576
             - TOOL_TIMEOUT=30000
@@ -48,6 +51,9 @@ services:
         # Red aislada (sin acceso externo directo)
         networks:
             - isolated
+
+        ports:
+            - "3333:3333"
 
         # Healthcheck
         healthcheck:

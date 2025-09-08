@@ -13,7 +13,7 @@
 
 Un servidor del Protocolo de Contexto de Modelo (MCP) que proporciona capacidades de automatización de navegadores usando Puppeteer. Este servidor permite a los LLMs interactuar con páginas web, tomar capturas de pantalla y ejecutar JavaScript en un entorno de navegador real con características de seguridad de nivel empresarial.
 
-> 🇪🇸 **Versión en Español** | 🇺🇸 **[English Version](README.md)** | 🤖 **[Versión para Agentes](AGENTS.md)**
+> 🇪🇸 **Versión en Español** | 🇺🇸 **[English Version](README.md)** | 🤖 **[Guía para Agentes](README_FOR_AGENTS.md)**
 
 ## 🚀 Características
 
@@ -78,6 +78,40 @@ Siendo un servidor MCP, la forma principal de usar Puppeteer Server es a través
 - `MAX_SCREENSHOT_SIZE`: Tamaño máximo de captura de pantalla en bytes
 - `MAX_CONTENT_LENGTH`: Longitud máxima de contenido HTML
 - `TOOL_TIMEOUT`: Timeout por operación de herramienta en milisegundos
+
+## Modo HTTP/SSE
+
+El servidor puede ejecutarse sobre HTTP utilizando **Server-Sent Events** cuando `MCP_TRANSPORT=http`, útil para n8n u otros clientes MCP que se comuniquen por HTTP.
+
+### Variables de Entorno
+
+- `MCP_TRANSPORT`: establece `http` para habilitar el modo HTTP (por defecto `stdio`).
+- `PORT`: puerto de escucha (por defecto `3333`).
+- `MCP_BEARER`: token Bearer opcional requerido en la cabecera `Authorization`.
+- `ALLOWED_ORIGINS`: lista separada por comas de orígenes permitidos en la cabecera `Origin` (`*` para permitir todos en desarrollo).
+- `MCP_BODY_LIMIT`: tamaño máximo del cuerpo JSON aceptado por `/messages` (por defecto `1mb`).
+
+### Inicio rápido
+
+```bash
+pnpm build
+MCP_TRANSPORT=http PORT=3333 node dist/index.js
+```
+
+Verificar el endpoint SSE:
+
+```bash
+curl -I -H 'Accept: text/event-stream' http://localhost:3333/sse
+```
+
+Un chequeo básico de salud está disponible en `GET /health`.
+
+Para el modo STDIO (por defecto):
+
+```bash
+pnpm build
+npx @modelcontextprotocol/inspector --cli node dist/index.js --method tools/list
+```
 
 ## 🛠️ Instalación Local y Testing
 
@@ -438,7 +472,7 @@ Todas las discusiones suceden en **GitHub Issues**.
 ## 🔗 Recursos Adicionales
 
 - **Documentación en inglés**: [README.md](README.md)
-- **Guía para agentes**: [AGENTS.md](AGENTS.md)
+- **Guía para agentes**: [README_FOR_AGENTS.md](README_FOR_AGENTS.md)
 - **Repositorio del proyecto**: https://github.com/tecnomanu/puppeteer-server
 - **Protocolo MCP**: https://modelcontextprotocol.io/
 
