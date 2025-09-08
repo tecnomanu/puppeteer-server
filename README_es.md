@@ -13,7 +13,7 @@
 
 Un servidor del Protocolo de Contexto de Modelo (MCP) que proporciona capacidades de automatización de navegadores usando Puppeteer. Este servidor permite a los LLMs interactuar con páginas web, tomar capturas de pantalla y ejecutar JavaScript en un entorno de navegador real con características de seguridad de nivel empresarial.
 
-> 🇪🇸 **Versión en Español** | 🇺🇸 **[English Version](README.md)** | 🤖 **[Versión para Agentes](AGENTS.md)**
+> 🇪🇸 **Versión en Español** | 🇺🇸 **[English Version](README.md)** | 🤖 **[Guía para Agentes](README_FOR_AGENTS.md)**
 
 ## 🚀 Características
 
@@ -438,7 +438,7 @@ Todas las discusiones suceden en **GitHub Issues**.
 ## 🔗 Recursos Adicionales
 
 - **Documentación en inglés**: [README.md](README.md)
-- **Guía para agentes**: [AGENTS.md](AGENTS.md)
+- **Guía para agentes**: [README_FOR_AGENTS.md](README_FOR_AGENTS.md)
 - **Repositorio del proyecto**: https://github.com/tecnomanu/puppeteer-server
 - **Protocolo MCP**: https://modelcontextprotocol.io/
 

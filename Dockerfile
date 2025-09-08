@@ -35,7 +35,10 @@ RUN apk add --no-cache \
 ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true \
     PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium-browser \
     DOCKER_CONTAINER=true \
-    NODE_ENV=production
+    NODE_ENV=production \
+    MCP_TRANSPORT=stdio \
+    MCP_BEARER="" \
+    ALLOWED_ORIGINS=""
 
 WORKDIR /app
 
@@ -57,6 +60,9 @@ ENV ALLOWED_ORIGINS="" \
     MAX_CONTENT_LENGTH=1048576 \
     TOOL_TIMEOUT=30000 \
     ALLOW_DANGEROUS=false
+
+
+EXPOSE 3333
 
 # Exponer información de salud (no puerto de red)
 HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
